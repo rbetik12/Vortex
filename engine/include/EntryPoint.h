@@ -5,6 +5,9 @@
 extern Vortex::Application * Vortex::createApplication();
 
 int main(int argc, char** argv) {
+    Vortex::Log::init();
+    VX_CORE_WARN("Initialized log");
+    VX_INFO("Hello!");
     auto app = Vortex::createApplication();
     app->run();
     delete app;

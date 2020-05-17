@@ -16,8 +16,11 @@ endif()
 set(CFLAGS -m64 -fvisibility=hidden)
 set(EXECUTABLE_OUTPUT_PATH ../bin/${CONFIGURATION}-${PLATFORM}/${CMAKE_PROJECT_NAME})
 set(LIBRARY_OUTPUT_PATH ../bin/${CONFIGURATION}-${PLATFORM}/${CMAKE_PROJECT_NAME}/lib)
+
+#Include directories
 include_directories(engine/include)
 include_directories(engine)
+include_directories(engine/vendor/spdlog/include)
 
 #Engine lib configuration
 set(VORTEX_HEADERS
@@ -25,9 +28,11 @@ set(VORTEX_HEADERS
         engine/include/Application.h
         engine/Vortex.h
         engine/include/EntryPoint.h
+        engine/include/Log.h
         )
 set(VORTEX_SOURCE
         engine/src/Application.cpp
+        engine/src/Log.cpp
         )
 
 add_library(vortex-engine SHARED ${VORTEX_SOURCE} ${VORTEX_HEADERS})
