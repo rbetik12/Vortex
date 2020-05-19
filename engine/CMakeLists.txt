@@ -18,6 +18,7 @@ set(LIBRARY_OUTPUT_PATH ../../bin/${CONFIGURATION}-${PLATFORM}/${CMAKE_PROJECT_N
 
 #Include directories
 include_directories(include)
+include_directories(src)
 include_directories(vendor/spdlog/include)
 
 #Engine lib configuration
@@ -27,7 +28,7 @@ set(VORTEX_HEADERS
         Vortex.h
         include/EntryPoint.h
         include/Log.h
-        )
+        src/events/Event.h src/events/KeyEvent.h src/events/MouseEvent.h src/events/ApplicationEvent.h)
 set(VORTEX_SOURCE
         src/Application.cpp
         src/Log.cpp

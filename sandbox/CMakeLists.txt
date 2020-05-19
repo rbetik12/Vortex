@@ -17,6 +17,7 @@ set(EXECUTABLE_OUTPUT_PATH ../../bin/${CONFIGURATION}-${PLATFORM}/${CMAKE_PROJEC
 
 include_directories(../engine)
 include_directories(../engine/include)
+include_directories(../engine/src)
 include_directories(../engine/vendor/spdlog/include)
 
 set(CMAKE_CXX_STANDARD 20)
