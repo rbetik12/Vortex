@@ -20,11 +20,15 @@ include_directories(../engine/include)
 include_directories(../engine/src)
 include_directories(../engine/vendor/spdlog/include)
 
-set(CMAKE_CXX_STANDARD 20)
-
 set(SANDBOX_SOURCES
         src/Sandbox.cpp
         )
 
+get_filename_component(LIB_ABS_ENGINE_PATH ../bin/${CONFIGURATION}-${PLATFORM}/${CMAKE_PROJECT_NAME}/lib ABSOLUTE)
+find_library(LIB_ENGINE engine PATHS "${LIB_ABS_ENGINE_PATH}")
+
 add_executable(${CMAKE_PROJECT_NAME} ${SANDBOX_SOURCES})
-target_link_libraries(${CMAKE_PROJECT_NAME} engine)
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE ${LIB_ENGINE})
+
+
+
