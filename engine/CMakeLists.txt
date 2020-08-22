@@ -14,7 +14,7 @@ endif()
 
 #Compiler configuration
 set(CFLAGS -m64 -fvisibility=hidden)
-set(LIBRARY_OUTPUT_PATH  ../../bin/${CONFIGURATION}-${PLATFORM}/${CMAKE_PROJECT_NAME}/lib)
+set(LIBRARY_OUTPUT_PATH  ../bin/${CONFIGURATION}-${PLATFORM}/${CMAKE_PROJECT_NAME}/lib)
 
 #Include directories
 include_directories(include)

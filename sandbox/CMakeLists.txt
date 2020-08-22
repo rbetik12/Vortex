@@ -13,7 +13,7 @@ if (${PLATFORM} STREQUAL "linux")
     add_definitions(-DVX_BUILD_SO)
 endif()
 
-set(EXECUTABLE_OUTPUT_PATH ../../bin/${CONFIGURATION}-${PLATFORM}/${CMAKE_PROJECT_NAME})
+set(EXECUTABLE_OUTPUT_PATH ../bin/${CONFIGURATION}-${PLATFORM}/${CMAKE_PROJECT_NAME})
 
 include_directories(../engine)
 include_directories(../engine/include)
@@ -24,11 +24,17 @@ set(SANDBOX_SOURCES
         src/Sandbox.cpp
         )
 
-get_filename_component(LIB_ABS_ENGINE_PATH ../bin/${CONFIGURATION}-${PLATFORM}/${CMAKE_PROJECT_NAME}/lib ABSOLUTE)
-find_library(LIB_ENGINE engine PATHS "${LIB_ABS_ENGINE_PATH}")
+#get_filename_component(LIB_ABS_ENGINE_PATH ../bin/${CONFIGURATION}-${PLATFORM}/${CMAKE_PROJECT_NAME}/lib ABSOLUTE)
+#find_library(LIB_ENGINE engine PATHS "${LIB_ABS_ENGINE_PATH}")
 
 add_executable(${CMAKE_PROJECT_NAME} ${SANDBOX_SOURCES})
-target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE ${LIB_ENGINE})
+
+
+add_dependencies(${CMAKE_PROJECT_NAME} engine)
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE engine glfw GL)
+
+
+
 
 
 
