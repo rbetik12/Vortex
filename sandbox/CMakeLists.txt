@@ -24,9 +24,6 @@ set(SANDBOX_SOURCES
         src/Sandbox.cpp
         )
 
-#get_filename_component(LIB_ABS_ENGINE_PATH ../bin/${CONFIGURATION}-${PLATFORM}/${CMAKE_PROJECT_NAME}/lib ABSOLUTE)
-#find_library(LIB_ENGINE engine PATHS "${LIB_ABS_ENGINE_PATH}")
-
 add_executable(${CMAKE_PROJECT_NAME} ${SANDBOX_SOURCES})
 
 

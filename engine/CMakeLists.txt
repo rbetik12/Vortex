@@ -17,21 +17,21 @@ set(CFLAGS -m64 -fvisibility=hidden)
 set(LIBRARY_OUTPUT_PATH  ../bin/${CONFIGURATION}-${PLATFORM}/${CMAKE_PROJECT_NAME}/lib)
 
 #Include directories
-include_directories(include)
 include_directories(src)
 include_directories(vendor/spdlog/include)
+include_directories(vendor/glfw/include)
 
 #Engine lib configuration
 set(VORTEX_HEADERS
-        include/Core.h
-        include/Application.h
+        src/Core.h
+        src/Application.h
         Vortex.h
-        include/EntryPoint.h
-        include/Log.h
-        src/events/Event.h src/events/KeyEvent.h src/events/MouseEvent.h src/events/ApplicationEvent.h)
+        src/EntryPoint.h
+        src/Log.h
+        src/events/Event.h src/events/KeyEvent.h src/events/MouseEvent.h src/events/ApplicationEvent.h src/Window.h src/platform/linux/LinuxWindow.cpp src/platform/linux/LinuxWindow.h)
 set(VORTEX_SOURCE
         src/Application.cpp
         src/Log.cpp
-        )
+        src/platform/linux/LinuxWindow.cpp src/platform/linux/LinuxWindow.h)
 
 add_library(engine SHARED ${VORTEX_SOURCE} ${VORTEX_HEADERS})
