@@ -11,6 +11,7 @@ if (${PLATFORM} STREQUAL "linux")
     add_definitions(-DVX_PLATFORM_LINUX)
     add_definitions(-DVX_BUILD_SO)
 endif()
+add_definitions(-DVX_ENABLE_ASSERTS)
 
 #Compiler configuration
 set(CFLAGS -m64 -fvisibility=hidden)

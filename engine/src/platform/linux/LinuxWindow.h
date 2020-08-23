@@ -29,7 +29,7 @@ namespace Vortex {
             unsigned int width, height;
             bool vSync;
 
-            EventCallbackFn eventCallback;
+            EventCallbackFn  eventCallback;
         };
 
         WindowData data;

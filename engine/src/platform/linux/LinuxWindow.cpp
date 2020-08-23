@@ -1,8 +1,15 @@
 #include <Log.h>
+#include <events/ApplicationEvent.h>
+#include <events/KeyEvent.h>
+#include <events/MouseEvent.h>
 #include "LinuxWindow.h"
 
 namespace Vortex {
     static bool glfwInitialized = false;
+
+    static void GLFWErrorCallback(int error, const char* description) {
+        VX_CORE_ERROR("GLFW Error ({0}): {1}", error, description);
+    }
 
     Window* Window::Create(const WindowProps& props) {
         return new LinuxWindow(props);
@@ -32,10 +39,78 @@ namespace Vortex {
             glfwInitialized = true;
         }
 
-        window = glfwCreateWindow((int)props.width, (int)props.height, data.title.c_str(), nullptr, nullptr);
+        window = glfwCreateWindow((int) props.width, (int) props.height, data.title.c_str(), nullptr, nullptr);
         glfwMakeContextCurrent(window);
         glfwSetWindowUserPointer(window, &data);
         SetVSync(true);
+
+        glfwSetWindowSizeCallback(window, [](GLFWwindow* window, int width, int height) {
+            WindowData& data = *(WindowData*) glfwGetWindowUserPointer(window);
+            data.width = width;
+            data.height = height;
+
+            WindowResizeEvent event(width, height);
+            data.eventCallback(event);
+        });
+
+        glfwSetWindowCloseCallback(window, [](GLFWwindow* window) {
+            WindowData& data = *(WindowData*) glfwGetWindowUserPointer(window);
+            WindowCloseEvent event;
+            data.eventCallback(event);
+        });
+
+        glfwSetKeyCallback(window, [](GLFWwindow* window, int key, int scancode, int action, int mods) {
+            WindowData& data = *(WindowData*) glfwGetWindowUserPointer(window);
+
+            switch (action) {
+                case GLFW_PRESS: {
+                    KeyPressedEvent event(key, 0);
+                    data.eventCallback(event);
+                    break;
+                }
+                case GLFW_RELEASE: {
+                    KeyReleasedEvent event(key);
+                    data.eventCallback(event);
+                    break;
+                }
+                case GLFW_REPEAT: {
+                    KeyPressedEvent event(key, 1);
+                    data.eventCallback(event);
+                    break;
+                }
+            }
+        });
+
+        glfwSetMouseButtonCallback(window, [](GLFWwindow* window, int button, int action, int mods) {
+            WindowData& data = *(WindowData*) glfwGetWindowUserPointer(window);
+
+            switch(action) {
+                case GLFW_PRESS: {
+                    MouseButtonPressedEvent event(button);
+                    data.eventCallback(event);
+                    break;
+                }
+                case GLFW_RELEASE: {
+                    MouseButtonReleasedEvent event(button);
+                    data.eventCallback(event);
+                    break;
+                }
+            }
+        });
+
+        glfwSetScrollCallback(window, [](GLFWwindow* window, double xOffset, double yOffset) {
+            WindowData& data = *(WindowData*) glfwGetWindowUserPointer(window);
+
+            MouseScrolledEvent event(xOffset, yOffset);
+            data.eventCallback(event);
+        });
+
+        glfwSetCursorPosCallback(window, [](GLFWwindow* window, double xPos, double yPos){
+            WindowData& data = *(WindowData*) glfwGetWindowUserPointer(window);
+
+            MouseMovedEvent event(xPos, yPos);
+            data.eventCallback(event);
+        });
     }
 
     void LinuxWindow::Shutdown() {
@@ -50,8 +125,7 @@ namespace Vortex {
     void LinuxWindow::SetVSync(bool enabled) {
         if (enabled) {
             glfwSwapInterval(1);
-        }
-        else {
+        } else {
             glfwSwapInterval(0);
         }
 
