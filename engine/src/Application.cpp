@@ -7,7 +7,12 @@ namespace Vortex {
 
 #define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
 
+    Application* Application::instance = nullptr;
+
     Application::Application() {
+        VX_CORE_ASSERT(!instance, "Application already exists!");
+        instance = this;
+
         window = std::unique_ptr<Window>(Window::Create());
         window->SetEventCallback(BIND_EVENT_FN(OnEvent));
     }
@@ -50,9 +55,11 @@ namespace Vortex {
 
     void Application::PushLayer(Layer* layer) {
         layerStack.PushLayer(layer);
+        layer->OnAttach();
     }
 
     void Application::PushOverlay(Layer* layer) {
         layerStack.PushOverlay(layer);
+        layer->OnAttach();
     }
 }
