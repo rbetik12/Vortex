@@ -45,8 +45,6 @@ namespace Vortex {
         inline bool isInCategory(EventCategory category) {
             return getCategoryFlags() & category;
         }
-
-    protected:
         bool handled = false;
     };
 

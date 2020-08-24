@@ -33,6 +33,6 @@ set(VORTEX_HEADERS
 set(VORTEX_SOURCE
         src/Application.cpp
         src/Log.cpp
-        src/platform/linux/LinuxWindow.cpp src/platform/linux/LinuxWindow.h)
+        src/platform/linux/LinuxWindow.cpp src/platform/linux/LinuxWindow.h src/Layer.cpp src/Layer.h src/LayerStack.cpp src/LayerStack.h)
 
 add_library(engine SHARED ${VORTEX_SOURCE} ${VORTEX_HEADERS})
