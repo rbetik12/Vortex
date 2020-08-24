@@ -21,6 +21,7 @@ set(LIBRARY_OUTPUT_PATH  ../bin/${CONFIGURATION}-${PLATFORM}/${CMAKE_PROJECT_NAM
 include_directories(src)
 include_directories(vendor/spdlog/include)
 include_directories(vendor/glfw/include)
+include_directories(vendor/glad/include)
 
 #Engine lib configuration
 set(VORTEX_HEADERS
@@ -36,3 +37,5 @@ set(VORTEX_SOURCE
         src/platform/linux/LinuxWindow.cpp src/platform/linux/LinuxWindow.h src/Layer.cpp src/Layer.h src/LayerStack.cpp src/LayerStack.h)
 
 add_library(engine SHARED ${VORTEX_SOURCE} ${VORTEX_HEADERS})
+
+target_link_libraries(engine glad)

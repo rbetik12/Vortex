@@ -2,6 +2,7 @@
 #include <events/ApplicationEvent.h>
 #include <events/KeyEvent.h>
 #include <events/MouseEvent.h>
+#include <glad/glad.h>
 #include "LinuxWindow.h"
 
 namespace Vortex {
@@ -41,6 +42,8 @@ namespace Vortex {
 
         window = glfwCreateWindow((int) props.width, (int) props.height, data.title.c_str(), nullptr, nullptr);
         glfwMakeContextCurrent(window);
+        int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+        VX_CORE_ASSERT(status, "Failed to initialize Glad!")
         glfwSetWindowUserPointer(window, &data);
         SetVSync(true);
 
