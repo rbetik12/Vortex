@@ -5,7 +5,7 @@ public:
     ExampleLayer():Layer("Example") {}
 
     void OnUpdate() override {
-        VX_INFO("ExampleLayer::Update");
+//        VX_INFO("ExampleLayer::Update");
     }
 
     void OnEvent(Vortex::Event& event) override {

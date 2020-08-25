@@ -10,7 +10,7 @@ namespace Vortex {
     public:
         MouseMovedEvent(float x, float y) : mouseX(x), mouseY(y) {}
 
-        inline float getX() const { return mouseY; }
+        inline float getX() const { return mouseX; }
 
         inline float getY() const { return mouseY; }
 

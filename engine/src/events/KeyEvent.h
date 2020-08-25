@@ -8,7 +8,7 @@ namespace Vortex {
 
     class VORTEX_API KeyEvent : public Event {
     public:
-        inline int getKeyCode() const { return keyCode; }
+        inline int GetKeyCode() const { return keyCode; }
 
         EVENT_CLASS_CATEGORY(EventCategoryKeyboard | EventCategoryInput)
 
@@ -50,5 +50,19 @@ namespace Vortex {
         }
 
         EVENT_CLASS_TYPE(KeyReleased)
+    };
+
+    class VORTEX_API KeyTypedEvent : public KeyEvent {
+    public:
+        KeyTypedEvent(int keycode)
+                : KeyEvent(keycode) {}
+
+        std::string toString() const override {
+            std::stringstream ss;
+            ss << "KeyTypedEvent: " << keyCode;
+            return ss.str();
+        }
+
+        EVENT_CLASS_TYPE(KeyTyped)
     };
 }

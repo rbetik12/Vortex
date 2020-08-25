@@ -5,8 +5,6 @@
 
 namespace Vortex {
 
-#define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
-
     Application* Application::instance = nullptr;
 
     Application::Application() {
@@ -14,7 +12,7 @@ namespace Vortex {
         instance = this;
 
         window = std::unique_ptr<Window>(Window::Create());
-        window->SetEventCallback(BIND_EVENT_FN(OnEvent));
+        window->SetEventCallback(BIND_EVENT_FN(Application::OnEvent));
     }
 
     Application::~Application() {
@@ -36,7 +34,7 @@ namespace Vortex {
 
     void Application::OnEvent(Event& e) {
         EventDispatcher dispatcher(e);
-        dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose));
+        dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(Application::OnWindowClose));
 
         for (auto it = layerStack.end(); it != layerStack.begin();) {
             (*--it)->OnEvent(e);
