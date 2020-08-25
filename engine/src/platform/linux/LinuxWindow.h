@@ -12,7 +12,7 @@ namespace Vortex {
         void OnUpdate() override;
 
         inline unsigned int GetWidth() const override {return data.width;}
-        inline unsigned int GetHeight() const override {return data.width;}
+        inline unsigned int GetHeight() const override {return data.height;}
 
         inline void SetEventCallback(const EventCallbackFn& callback) override { data.eventCallback = callback; }
         void SetVSync(bool enabled) override;
