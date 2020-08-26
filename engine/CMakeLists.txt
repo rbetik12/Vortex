@@ -38,7 +38,7 @@ set(VORTEX_HEADERS
 set(VORTEX_SOURCE
         src/Application.cpp
         src/Log.cpp
-        src/platform/linux/LinuxWindow.cpp src/platform/linux/LinuxWindow.h src/Layer.cpp src/Layer.h src/LayerStack.cpp src/LayerStack.h src/imgui/ImGuiLayer.h src/imgui/ImGuiLayer.cpp)
+        src/platform/linux/LinuxWindow.cpp src/platform/linux/LinuxWindow.h src/Layer.cpp src/Layer.h src/LayerStack.cpp src/LayerStack.h src/imgui/ImGuiLayer.h src/imgui/ImGuiLayer.cpp src/Input.h src/platform/linux/LinuxInput.cpp src/platform/linux/LinuxInput.h)
 
 add_library(engine SHARED ${VORTEX_SOURCE} ${VORTEX_HEADERS})
 

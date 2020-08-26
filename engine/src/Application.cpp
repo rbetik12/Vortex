@@ -2,6 +2,7 @@
 #include "Log.h"
 #include <GLFW/glfw3.h>
 #include <iostream>
+#include "Input.h"
 
 namespace Vortex {
 
@@ -27,6 +28,9 @@ namespace Vortex {
             for (Layer* layer: layerStack) {
                 layer->OnUpdate();
             }
+
+            auto [x, y] = Input::GetMousePosition();
+            VX_CORE_TRACE("{0}, {1}", x, y);
 
             window->OnUpdate();
         }
