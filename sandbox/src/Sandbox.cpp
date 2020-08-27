@@ -5,7 +5,9 @@ public:
     ExampleLayer():Layer("Example") {}
 
     void OnUpdate() override {
-//        VX_INFO("ExampleLayer::Update");
+        if (Vortex::Input::GetKeyDown(VX_KEY_TAB)) {
+            VX_TRACE("Tab is polled");
+        }
     }
 
     void OnEvent(Vortex::Event& event) override {
