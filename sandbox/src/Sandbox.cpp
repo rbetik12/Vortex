@@ -1,3 +1,4 @@
+#include <vendor/imgui/imgui.h>
 #include "Vortex.h"
 
 class ExampleLayer: public Vortex::Layer {
@@ -11,6 +12,14 @@ public:
     }
 
     void OnEvent(Vortex::Event& event) override {
+    }
+
+    void OnImGuiRender() override {
+        ImGui::Begin("Test");
+
+        ImGui::Text("test");
+
+        ImGui::End();
     }
 };
 
