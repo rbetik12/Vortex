@@ -7,6 +7,7 @@
 #include "Layer.h"
 #include "LayerStack.h"
 #include <events/ApplicationEvent.h>
+#include <imgui/ImGuiLayer.h>
 
 namespace Vortex {
     class VORTEX_API Application {
@@ -27,6 +28,7 @@ namespace Vortex {
     private:
         bool OnWindowClose(WindowCloseEvent& e);
         std::unique_ptr<Window> window;
+        ImGuiLayer* imguiLayer;
         bool running = true;
         LayerStack layerStack;
 

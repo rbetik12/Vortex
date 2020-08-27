@@ -12,30 +12,14 @@ namespace Vortex {
 
         ~ImGuiLayer();
 
-        void OnUpdate() override;
+        virtual void OnDetach() override;
 
-        void OnDetach() override;
+        virtual void OnAttach() override;
 
-        void OnAttach() override;
+        void OnImGuiRender() override;
 
-        void OnEvent(Event& event) override;
-
-        bool OnMouseButtonPressed(MouseButtonPressedEvent& e);
-
-        bool OnMouseMoved(MouseMovedEvent& e);
-
-        bool OnMouseScrolled(MouseScrolledEvent& e);
-
-        bool OnMouseButtonReleased(MouseButtonReleasedEvent &e);
-
-        bool OnKeyPressed(KeyPressedEvent &e);
-
-        bool OnKeyReleased(KeyReleasedEvent &e);
-
-        bool OnKeyTyped(KeyTypedEvent &e);
-
-        bool OnWindowResized(WindowResizeEvent &e);
-
+        void Begin();
+        void End();
 
     private:
         float mTime = 0.0f;

@@ -33,13 +33,11 @@ set(VORTEX_HEADERS
         Vortex.h
         src/EntryPoint.h
         src/Log.h
-        src/platform/opengl/ImGuiOpenGLRenderer.cpp
-        src/platform/opengl/ImGuiOpenGLRenderer.h
         src/events/Event.h src/events/KeyEvent.h src/events/MouseEvent.h src/events/ApplicationEvent.h src/Window.h src/platform/linux/LinuxWindow.cpp src/platform/linux/LinuxWindow.h)
 set(VORTEX_SOURCE
         src/Application.cpp
         src/Log.cpp
-        src/platform/linux/LinuxWindow.cpp src/platform/linux/LinuxWindow.h src/Layer.cpp src/Layer.h src/LayerStack.cpp src/LayerStack.h src/imgui/ImGuiLayer.h src/imgui/ImGuiLayer.cpp src/Input.h src/platform/linux/LinuxInput.cpp src/platform/linux/LinuxInput.h src/KeyCodes.h src/MouseButtonCodes.h)
+        src/platform/linux/LinuxWindow.cpp src/platform/linux/LinuxWindow.h src/Layer.cpp src/Layer.h src/LayerStack.cpp src/LayerStack.h src/imgui/ImGuiLayer.h src/imgui/ImGuiLayer.cpp src/Input.h src/platform/linux/LinuxInput.cpp src/platform/linux/LinuxInput.h src/KeyCodes.h src/MouseButtonCodes.h src/imgui/ImGuiBuild.cpp)
 
 add_library(engine SHARED ${VORTEX_SOURCE} ${VORTEX_HEADERS})
 

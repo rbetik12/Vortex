@@ -2,7 +2,6 @@
 
 namespace Vortex {
     LayerStack::LayerStack() {
-        layerInsert = layers.begin();
     }
 
     LayerStack::~LayerStack() {
@@ -12,7 +11,8 @@ namespace Vortex {
     }
 
     void LayerStack::PushLayer(Layer* layer) {
-        layerInsert = layers.emplace(layerInsert, layer);
+        layers.emplace(layers.begin() + layerInsertIndex, layer);
+        layerInsertIndex++;
     }
 
     void LayerStack::PushOverlay(Layer* overlay) {
@@ -24,7 +24,7 @@ namespace Vortex {
 
         if (it != layers.end()) {
             layers.erase(it);
-            layerInsert--;
+            layerInsertIndex--;
         }
     }
 

@@ -14,6 +14,8 @@ namespace Vortex {
 
         window = std::unique_ptr<Window>(Window::Create());
         window->SetEventCallback(BIND_EVENT_FN(Application::OnEvent));
+        imguiLayer = new ImGuiLayer();
+        PushOverlay(imguiLayer);
     }
 
     Application::~Application() {
@@ -29,8 +31,11 @@ namespace Vortex {
                 layer->OnUpdate();
             }
 
-            auto [x, y] = Input::GetMousePosition();
-            VX_CORE_TRACE("{0}, {1}", x, y);
+            imguiLayer->Begin();
+            for (Layer* layer: layerStack) {
+                layer->OnImGuiRender();
+            }
+            imguiLayer->End();
 
             window->OnUpdate();
         }
@@ -46,8 +51,6 @@ namespace Vortex {
                 break;
             }
         }
-
-        VX_CORE_TRACE("{0}", e);
     }
 
     bool Application::OnWindowClose(WindowCloseEvent& e) {
