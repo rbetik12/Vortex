@@ -4,9 +4,9 @@
 namespace Vortex {
     class VORTEX_API Input {
     public:
-        inline static bool GetKeyDown(int keycode) {instance->GetKeyDownImpl(keycode);}
+        inline static bool GetKeyDown(int keycode) {return instance->GetKeyDownImpl(keycode);}
 
-        inline static bool GetKeyUp(int keycode) {instance->GetKeyUpImpl(keycode);}
+        inline static bool GetKeyUp(int keycode) {return instance->GetKeyUpImpl(keycode);}
 
         inline static bool GetMouseButtonPressed(int button) {return instance->GetMouseButtonPressedImpl(button);}
 

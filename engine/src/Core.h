@@ -5,7 +5,7 @@
 #include <csignal>
 
 #ifdef VX_BUILD_SO
-#define VORTEX_API __attribute__ ((dllexport))
+#define VORTEX_API
 #else
 #define VORTEX_API __attribute__ ((dllimport))
 #endif

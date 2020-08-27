@@ -24,6 +24,7 @@ include_directories(vendor/spdlog/include)
 include_directories(vendor/glfw/include)
 include_directories(vendor/glad/include)
 include_directories(vendor/imgui)
+include_directories(vendor/glm/)
 
 #Engine lib configuration
 set(VORTEX_HEADERS

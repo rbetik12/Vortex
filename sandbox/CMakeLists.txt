@@ -20,6 +20,7 @@ include_directories(../engine/include)
 include_directories(../engine/src)
 include_directories(../engine/src/imgui)
 include_directories(../engine/vendor/spdlog/include)
+include_directories(../engine/vendor/glm)
 
 set(SANDBOX_SOURCES
         src/Sandbox.cpp
