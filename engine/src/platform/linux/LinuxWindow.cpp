@@ -42,7 +42,7 @@ namespace Vortex {
 
         window = glfwCreateWindow((int) props.width, (int) props.height, data.title.c_str(), nullptr, nullptr);
         glfwMakeContextCurrent(window);
-        int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+        int status = gladLoadGLLoader((GLADloadproc) glfwGetProcAddress);
         VX_CORE_ASSERT(status, "Failed to initialize Glad!")
         glfwSetWindowUserPointer(window, &data);
         SetVSync(true);
@@ -93,7 +93,7 @@ namespace Vortex {
         glfwSetMouseButtonCallback(window, [](GLFWwindow* window, int button, int action, int mods) {
             WindowData& data = *(WindowData*) glfwGetWindowUserPointer(window);
 
-            switch(action) {
+            switch (action) {
                 case GLFW_PRESS: {
                     MouseButtonPressedEvent event(button);
                     data.eventCallback(event);
@@ -114,7 +114,7 @@ namespace Vortex {
             data.eventCallback(event);
         });
 
-        glfwSetCursorPosCallback(window, [](GLFWwindow* window, double xPos, double yPos){
+        glfwSetCursorPosCallback(window, [](GLFWwindow* window, double xPos, double yPos) {
             WindowData& data = *(WindowData*) glfwGetWindowUserPointer(window);
 
             MouseMovedEvent event(xPos, yPos);

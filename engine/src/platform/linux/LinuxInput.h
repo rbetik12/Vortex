@@ -1,8 +1,9 @@
 #pragma once
 
 #include "Input.h"
+
 namespace Vortex {
-    class VORTEX_API LinuxInput : public Input {
+    class LinuxInput : public Input {
     protected:
         virtual bool GetKeyDownImpl(int keycode) override;
 

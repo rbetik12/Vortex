@@ -2,9 +2,9 @@
 
 #ifdef VX_PLATFORM_LINUX
 
-extern Vortex::Application * Vortex::createApplication();
+extern Vortex::Application* Vortex::createApplication();
 
-int main(int argc, char** argv) {
+int main() {
     Vortex::Log::init();
     VX_CORE_WARN("Initialized log");
     VX_INFO("Hello!");

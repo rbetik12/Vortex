@@ -26,12 +26,12 @@ namespace Vortex {
     }
 
     float LinuxInput::GetMouseXImpl() {
-        auto [x, y] = GetMousePositionImpl();
+        auto[x, y] = GetMousePositionImpl();
         return x;
     }
 
     float LinuxInput::GetMouseYImpl() {
-        auto [x, y] = GetMousePositionImpl();
+        auto[x, y] = GetMousePositionImpl();
         return y;
     }
 

@@ -4,10 +4,10 @@
 
 #include <csignal>
 
-#ifdef VX_BUILD_SO
-#define VORTEX_API
+#ifdef VX_DYNAMIC_LINK
+#define VORTEX_API __attribute__(dllexport)
 #else
-#define VORTEX_API __attribute__ ((dllimport))
+#define VORTEX_API
 #endif
 #else
 #error Vortex only support Linux!

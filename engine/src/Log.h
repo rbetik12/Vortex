@@ -1,4 +1,5 @@
 #pragma once
+
 #include <memory>
 #include "Core.h"
 #include "spdlog/spdlog.h"
@@ -6,15 +7,16 @@
 #include "spdlog/fmt/ostr.h"
 
 namespace Vortex {
-    class VORTEX_API Log {
+    class Log {
     private:
         static std::shared_ptr<spdlog::logger> coreLogger;
         static std::shared_ptr<spdlog::logger> clientLogger;
     public:
         static void init();
 
-        inline static std::shared_ptr<spdlog::logger>& getCoreLogger() {return coreLogger;}
-        inline static std::shared_ptr<spdlog::logger>& getClientLogger() {return clientLogger;}
+        inline static std::shared_ptr<spdlog::logger>& getCoreLogger() { return coreLogger; }
+
+        inline static std::shared_ptr<spdlog::logger>& getClientLogger() { return clientLogger; }
     };
 }
 

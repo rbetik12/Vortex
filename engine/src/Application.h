@@ -10,7 +10,7 @@
 #include <imgui/ImGuiLayer.h>
 
 namespace Vortex {
-    class VORTEX_API Application {
+    class Application {
     public:
         Application();
 
@@ -21,12 +21,16 @@ namespace Vortex {
         void OnEvent(Event& e);
 
         void PushLayer(Layer* layer);
+
         void PushOverlay(Layer* layer);
 
-        inline static Application& Get() {return *instance;}
-        inline Window& GetWindow() {return *window;}
+        inline static Application& Get() { return *instance; }
+
+        inline Window& GetWindow() { return *window; }
+
     private:
         bool OnWindowClose(WindowCloseEvent& e);
+
         std::unique_ptr<Window> window;
         ImGuiLayer* imguiLayer;
         bool running = true;

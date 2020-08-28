@@ -6,7 +6,7 @@
 
 namespace Vortex {
 
-    class VORTEX_API MouseMovedEvent : public Event {
+    class MouseMovedEvent : public Event {
     public:
         MouseMovedEvent(float x, float y) : mouseX(x), mouseY(y) {}
 
@@ -28,7 +28,7 @@ namespace Vortex {
         float mouseX, mouseY;
     };
 
-    class VORTEX_API MouseScrolledEvent : public Event {
+    class MouseScrolledEvent : public Event {
     public:
         MouseScrolledEvent(float xOffset, float yOffset) : xOffset(xOffset), yOffset(yOffset) {}
 
@@ -50,7 +50,7 @@ namespace Vortex {
         float xOffset, yOffset;
     };
 
-    class VORTEX_API MouseButtonEvent : public Event {
+    class MouseButtonEvent : public Event {
     public:
 
         inline int getMouseButton() const { return button; }
@@ -64,7 +64,7 @@ namespace Vortex {
         int button;
     };
 
-    class VORTEX_API MouseButtonPressedEvent : public MouseButtonEvent {
+    class MouseButtonPressedEvent : public MouseButtonEvent {
     public:
 
         MouseButtonPressedEvent(int button) : MouseButtonEvent(button) {}
@@ -78,7 +78,7 @@ namespace Vortex {
         EVENT_CLASS_TYPE(MouseButtonPressed)
     };
 
-    class VORTEX_API MouseButtonReleasedEvent : public MouseButtonEvent {
+    class MouseButtonReleasedEvent : public MouseButtonEvent {
     public:
 
         MouseButtonReleasedEvent(int button) : MouseButtonEvent(button) {}

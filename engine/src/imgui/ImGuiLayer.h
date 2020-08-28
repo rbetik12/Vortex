@@ -6,7 +6,7 @@
 #include "events/MouseEvent.h"
 
 namespace Vortex {
-    class VORTEX_API ImGuiLayer : public Layer {
+    class ImGuiLayer : public Layer {
     public:
         ImGuiLayer();
 
@@ -19,6 +19,7 @@ namespace Vortex {
         void OnImGuiRender() override;
 
         void Begin();
+
         void End();
 
     private:

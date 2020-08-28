@@ -30,7 +30,7 @@ namespace Vortex {
 
 #define EVENT_CLASS_CATEGORY(category) virtual int getCategoryFlags() const override { return category; }
 
-    class VORTEX_API Event {
+    class Event {
         friend class EventDispatcher;
 
     public:
@@ -45,6 +45,7 @@ namespace Vortex {
         inline bool isInCategory(EventCategory category) {
             return getCategoryFlags() & category;
         }
+
         bool handled = false;
     };
 

@@ -10,7 +10,6 @@ set(PLATFORM linux)
 #Preprocessor configuration
 if (${PLATFORM} STREQUAL "linux")
     add_definitions(-DVX_PLATFORM_LINUX)
-    add_definitions(-DVX_BUILD_SO)
 endif()
 
 set(EXECUTABLE_OUTPUT_PATH ../bin/${CONFIGURATION}-${PLATFORM}/${CMAKE_PROJECT_NAME})
