@@ -31,6 +31,8 @@ namespace Vortex {
 
         GLFWwindow* window;
 
+        GraphicsContext* context;
+
         struct WindowData {
             std::string title;
             unsigned int width, height;

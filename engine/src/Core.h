@@ -14,6 +14,7 @@
 #endif
 
 #ifdef VX_ENABLE_ASSERTS
+#include "Log.h"
 #define VX_ASSERT(x, ...) { if(!(x)) { VX_ERROR("Assertion Failed: {0}", __VA_ARGS__); raise(SIGTRAP); } }
 #define VX_CORE_ASSERT(x, ...) { if(!(x)) { VX_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); raise(SIGTRAP); } }
 #else
