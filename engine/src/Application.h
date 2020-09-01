@@ -36,6 +36,8 @@ namespace Vortex {
         bool running = true;
         LayerStack layerStack;
 
+        unsigned int vertexBuffer, indexBuffer, vertexArray;
+
         static Application* instance;
     };
 

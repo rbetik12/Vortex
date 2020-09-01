@@ -35,4 +35,4 @@ set(VORTEX_SOURCE
 
 add_library(engine STATIC ${VORTEX_SOURCE} ${VORTEX_HEADERS})
 
-target_link_libraries(engine glad imgui)
+target_link_libraries(engine glad imgui glfw)
