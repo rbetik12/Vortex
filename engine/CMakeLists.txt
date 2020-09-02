@@ -31,7 +31,7 @@ set(VORTEX_HEADERS
 set(VORTEX_SOURCE
         src/Application.cpp
         src/Log.cpp
-        src/platform/linux/LinuxWindow.cpp src/platform/linux/LinuxWindow.h src/Layer.cpp src/Layer.h src/LayerStack.cpp src/LayerStack.h src/imgui/ImGuiLayer.h src/imgui/ImGuiLayer.cpp src/Input.h src/platform/linux/LinuxInput.cpp src/platform/linux/LinuxInput.h src/KeyCodes.h src/MouseButtonCodes.h src/imgui/ImGuiBuild.cpp src/renderer/GraphicsContext.h src/platform/opengl/OpenGLContext.cpp src/platform/opengl/OpenGLContext.h)
+        src/platform/linux/LinuxWindow.cpp src/platform/linux/LinuxWindow.h src/Layer.cpp src/Layer.h src/LayerStack.cpp src/LayerStack.h src/imgui/ImGuiLayer.h src/imgui/ImGuiLayer.cpp src/Input.h src/platform/linux/LinuxInput.cpp src/platform/linux/LinuxInput.h src/KeyCodes.h src/MouseButtonCodes.h src/imgui/ImGuiBuild.cpp src/renderer/GraphicsContext.h src/platform/opengl/OpenGLContext.cpp src/platform/opengl/OpenGLContext.h src/renderer/Shader.h src/renderer/Shader.cpp)
 
 add_library(engine STATIC ${VORTEX_SOURCE} ${VORTEX_HEADERS})
 

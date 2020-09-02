@@ -9,6 +9,8 @@
 #include <events/ApplicationEvent.h>
 #include <imgui/ImGuiLayer.h>
 
+#include "renderer/Shader.h"
+
 namespace Vortex {
     class Application {
     public:
@@ -37,6 +39,7 @@ namespace Vortex {
         LayerStack layerStack;
 
         unsigned int vertexBuffer, indexBuffer, vertexArray;
+        std::unique_ptr<Shader> shader;
 
         static Application* instance;
     };

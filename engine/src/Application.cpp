@@ -44,6 +44,35 @@ namespace Vortex {
         };
 
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+        std::string vertexSrc = R"(
+            #version 330 core
+
+            layout(location = 0) in vec3 position;
+
+            out vec3 vPosition;
+
+            void main(){
+                vPosition = position;
+                gl_Position = vec4(position, 1.0);
+            }
+
+        )";
+
+        std::string fragmentSrc = R"(
+            #version 330 core
+
+            layout(location = 0) out vec4 color;
+
+            in vec3 vPosition;
+
+            void main(){
+                color = vec4(vPosition * 0.5 + 0.5, 1.0);
+            }
+
+        )";
+
+        shader.reset(new Shader(vertexSrc, fragmentSrc));
     }
 
     Application::~Application() {
@@ -55,6 +84,8 @@ namespace Vortex {
             glClearColor(0.1, 0.1, 0.1, 1);
             glClear(GL_COLOR_BUFFER_BIT);
 
+
+            shader->Bind();
             glBindVertexArray(vertexArray);
             glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
 
