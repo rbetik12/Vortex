@@ -8,6 +8,7 @@
 #include "LayerStack.h"
 #include <events/ApplicationEvent.h>
 #include <imgui/ImGuiLayer.h>
+#include <renderer/Buffer.h>
 
 #include "renderer/Shader.h"
 
@@ -38,8 +39,10 @@ namespace Vortex {
         bool running = true;
         LayerStack layerStack;
 
-        unsigned int vertexBuffer, indexBuffer, vertexArray;
+        unsigned int vertexArray;
         std::unique_ptr<Shader> shader;
+        std::unique_ptr<VertexBuffer> vertexBuffer;
+        std::unique_ptr<IndexBuffer> indexBuffer;
 
         static Application* instance;
     };
