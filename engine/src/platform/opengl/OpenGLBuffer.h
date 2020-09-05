@@ -10,12 +10,17 @@ namespace Vortex {
 
         virtual ~OpenGLVertexBuffer();
 
+        void SetLayout(const BufferLayout& layout) override { this->layout = layout; }
+
+        const BufferLayout& GetLayout() const override { return layout; }
+
         virtual void Bind() const override;
 
         virtual void UnBind() const override;
 
     private:
         uint32_t rendererID;
+        BufferLayout layout;
     };
 
     class OpenGLIndexBuffer : public IndexBuffer {
