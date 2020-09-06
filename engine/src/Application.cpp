@@ -7,36 +7,6 @@ namespace Vortex {
 
     Application* Application::instance = nullptr;
 
-    static GLenum ShaderDataTypeToOpenGLBaseType(ShaderDataType type) {
-        switch (type) {
-            case ShaderDataType::Float:
-                return GL_FLOAT;
-            case ShaderDataType::Float2:
-                return GL_FLOAT;
-            case ShaderDataType::Float3:
-                return GL_FLOAT;
-            case ShaderDataType::Float4:
-                return GL_FLOAT;
-            case ShaderDataType::Mat3:
-                return GL_FLOAT;
-            case ShaderDataType::Mat4:
-                return GL_FLOAT;
-            case ShaderDataType::Int:
-                return GL_INT;
-            case ShaderDataType::Int2:
-                return GL_INT;
-            case ShaderDataType::Int3:
-                return GL_INT;
-            case ShaderDataType::Int4:
-                return GL_INT;
-            case ShaderDataType::Bool:
-                return GL_BOOL;
-        }
-
-        VX_CORE_ASSERT(false, "Unknown ShaderDataType!");
-        return 0;
-    }
-
     Application::Application() {
         VX_CORE_ASSERT(!instance, "Application already exists!");
         instance = this;
@@ -46,8 +16,7 @@ namespace Vortex {
         imguiLayer = new ImGuiLayer();
         PushOverlay(imguiLayer);
 
-        glGenVertexArrays(1, &vertexArray);
-        glBindVertexArray(vertexArray);
+        vertexArray.reset(VertexArray::Create());
 
         float vertices[7 * 3] = {
                 -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f,
@@ -55,38 +24,54 @@ namespace Vortex {
                 0.0f, 0.5f, 0.0f, 0.5f, 0.0f, 1.0f, 1.0f
         };
 
+        std::shared_ptr<VertexBuffer> vertexBuffer;
         vertexBuffer.reset(VertexBuffer::Create(vertices, sizeof(vertices), RenderProperties::StaticDraw));
-        vertexBuffer->Bind();
 
-        {
-            BufferLayout layout = {
-                    {ShaderDataType::Float3, "position"},
-                    {ShaderDataType::Float4, "color"},
-            };
 
-            vertexBuffer->SetLayout(layout);
-        }
+        BufferLayout layout = {
+                {ShaderDataType::Float3, "position"},
+                {ShaderDataType::Float4, "color"},
+        };
 
-        uint32_t index = 0;
-        for (const auto& element : vertexBuffer->GetLayout()) {
-            glEnableVertexAttribArray(index);
-            glVertexAttribPointer(
-                    index,
-                    element.GetComponentCount(),
-                    ShaderDataTypeToOpenGLBaseType(element.type),
-                    element.normalized ? GL_TRUE : GL_FALSE,
-                    vertexBuffer->GetLayout().GetStride(),
-                    (const void*) element.offset
-                    );
-            index += 1;
-        }
+        vertexBuffer->SetLayout(layout);
+
+        vertexArray->AddVertexBuffer(vertexBuffer);
 
         uint32_t indices[3] = {
                 0, 1, 2
         };
 
+        std::shared_ptr<IndexBuffer> indexBuffer;
         indexBuffer.reset(IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t), RenderProperties::StaticDraw));
-        indexBuffer->Bind();
+        vertexArray->SetIndexBuffer(indexBuffer);
+
+        squareVA.reset(VertexArray::Create());
+
+        float verticesSquare[3 * 4] = {
+                -0.75f, -0.75f, 0.0f,
+                0.75f, -0.75f, 0.0f,
+                0.75f, 0.75f, 0.0f,
+                -0.75f, 0.75f, 0.0f,
+        };
+
+        std::shared_ptr<VertexBuffer> squareVB;
+        squareVB.reset(VertexBuffer::Create(verticesSquare, sizeof(verticesSquare), RenderProperties::StaticDraw));
+
+        squareVB->SetLayout({
+                                        {ShaderDataType::Float3, "position"}
+                                });
+
+        squareVA->AddVertexBuffer(squareVB);
+
+        uint32_t squareIndices[6] = {
+                0, 1, 2,
+                2, 3, 0
+        };
+
+        std::shared_ptr<IndexBuffer> squareIB;
+        squareIB.reset(IndexBuffer::Create(squareIndices, sizeof(verticesSquare) / sizeof(uint32_t), RenderProperties::StaticDraw));
+
+        squareVA->SetIndexBuffer(squareIB);
 
         std::string vertexSrc = R"(
             #version 330 core
@@ -121,21 +106,54 @@ namespace Vortex {
         )";
 
         shader.reset(new Shader(vertexSrc, fragmentSrc));
+
+        std::string basicVertexShader = R"(
+            #version 330 core
+
+            layout(location = 0) in vec3 position;
+
+            out vec3 vPosition;
+            out vec4 vColor;
+
+            void main(){
+                vPosition = position;
+                gl_Position = vec4(position, 1.0);
+            }
+
+        )";
+
+        std::string basicFragmentShader = R"(
+            #version 330 core
+
+            layout(location = 0) out vec4 color;
+
+            in vec3 vPosition;
+
+            void main(){
+                color = vec4(vPosition * 0.5 + 0.5, 1.0);
+            }
+
+        )";
+
+        basicShader.reset(new Shader(basicVertexShader, basicFragmentShader));
     }
 
     Application::~Application() {
 
     }
 
-    void Application::run() {
+    void Application::Run() {
         while (running) {
             glClearColor(0.1, 0.1, 0.1, 1);
             glClear(GL_COLOR_BUFFER_BIT);
 
+            basicShader->Bind();
+            squareVA->Bind();
+            glDrawElements(GL_TRIANGLES, squareVA->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
 
             shader->Bind();
-            glBindVertexArray(vertexArray);
-            glDrawElements(GL_TRIANGLES, indexBuffer->GetCount(), GL_UNSIGNED_INT, nullptr);
+            vertexArray->Bind();
+            glDrawElements(GL_TRIANGLES, vertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
 
             for (Layer* layer: layerStack) {
                 layer->OnUpdate();

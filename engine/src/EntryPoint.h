@@ -9,7 +9,7 @@ int main() {
     VX_CORE_WARN("Initialized log");
     VX_INFO("Hello!");
     auto app = Vortex::createApplication();
-    app->run();
+    app->Run();
     delete app;
     return 0;
 }

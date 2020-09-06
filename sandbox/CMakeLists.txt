@@ -3,12 +3,8 @@ project(sandbox)
 
 set(CMAKE_CXX_STANDARD 20)
 
-#Initial config
-set(CONFIGURATION debug)
-set(PLATFORM linux)
-
 #Preprocessor configuration
-if (${PLATFORM} STREQUAL "linux")
+if (UNIX)
     add_definitions(-DVX_PLATFORM_LINUX)
 endif()
 

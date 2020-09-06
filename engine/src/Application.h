@@ -9,6 +9,7 @@
 #include <events/ApplicationEvent.h>
 #include <imgui/ImGuiLayer.h>
 #include <renderer/Buffer.h>
+#include <renderer/VertexArray.h>
 
 #include "renderer/Shader.h"
 
@@ -19,7 +20,7 @@ namespace Vortex {
 
         virtual ~Application();
 
-        void run();
+        void Run();
 
         void OnEvent(Event& e);
 
@@ -39,10 +40,11 @@ namespace Vortex {
         bool running = true;
         LayerStack layerStack;
 
-        unsigned int vertexArray;
-        std::unique_ptr<Shader> shader;
-        std::unique_ptr<VertexBuffer> vertexBuffer;
-        std::unique_ptr<IndexBuffer> indexBuffer;
+        std::shared_ptr<Shader> shader;
+        std::shared_ptr<VertexArray> vertexArray;
+
+        std::shared_ptr<Shader> basicShader;
+        std::shared_ptr<VertexArray> squareVA;
 
         static Application* instance;
     };
