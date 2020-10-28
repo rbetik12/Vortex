@@ -1,6 +1,8 @@
 #include <glad/glad.h>
 #include <vector>
 #include <Log.h>
+#include <platform/opengl/OpenGLErrorLog.h>
+#include <iostream>
 #include "Shader.h"
 
 namespace Vortex {
@@ -126,5 +128,19 @@ namespace Vortex {
 
     void Shader::UnBind() {
         glUseProgram(0);
+    }
+
+    void Shader::setUniform1i(const std::string& name, int value) {
+        glCall(glUniform1i(getUniformLocation(name), value));
+    }
+
+    int Shader::getUniformLocation(const std::string &name) {
+        if (m_UniformLocationCache.find(name) != m_UniformLocationCache.end())
+            return m_UniformLocationCache[name];
+        int location = glGetUniformLocation(rendererID, name.c_str());
+        if (location == -1)
+            std::cout << "Warning: uniform '" << name << "' doesn't exist!" << std::endl;
+        m_UniformLocationCache[name] = location;
+        return location;
     }
 }

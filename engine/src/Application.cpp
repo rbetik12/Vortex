@@ -2,6 +2,7 @@
 #include "Log.h"
 #include <iostream>
 #include <glad/glad.h>
+#include <game/GameField.h>
 
 namespace Vortex {
 
@@ -47,18 +48,19 @@ namespace Vortex {
 
         squareVA.reset(VertexArray::Create());
 
-        float verticesSquare[3 * 4] = {
-                -0.75f, -0.75f, 0.0f,
-                0.75f, -0.75f, 0.0f,
-                0.75f, 0.75f, 0.0f,
-                -0.75f, 0.75f, 0.0f,
+        float verticesSquare[4 * 4] = {
+                -1.f, -1.f, 0.0f, 0.0f,
+                1.f, -1.f, 1.0f, 0.0f,
+                1.f, 1.f, 1.0f, 1.0f,
+                -1.f, 1.f, 0.0f, 1.0f
         };
 
         std::shared_ptr<VertexBuffer> squareVB;
         squareVB.reset(VertexBuffer::Create(verticesSquare, sizeof(verticesSquare), RenderProperties::StaticDraw));
 
         squareVB->SetLayout({
-                                        {ShaderDataType::Float3, "position"}
+                                        {ShaderDataType::Float2, "position"},
+                                        {ShaderDataType::Float2, "texCoord"}
                                 });
 
         squareVA->AddVertexBuffer(squareVB);
@@ -111,13 +113,13 @@ namespace Vortex {
             #version 330 core
 
             layout(location = 0) in vec3 position;
+            layout(location = 1) in vec2 texCoord;
 
-            out vec3 vPosition;
-            out vec4 vColor;
+            out vec2 v_TexCoord;
 
             void main(){
-                vPosition = position;
                 gl_Position = vec4(position, 1.0);
+                v_TexCoord = texCoord;
             }
 
         )";
@@ -127,15 +129,25 @@ namespace Vortex {
 
             layout(location = 0) out vec4 color;
 
-            in vec3 vPosition;
+            in vec2 v_TexCoord;
+            uniform sampler2D u_Texture;
 
             void main(){
-                color = vec4(vPosition * 0.5 + 0.5, 1.0);
+                vec4 texColor = texture(u_Texture, v_TexCoord);
+                color = texColor;
             }
 
         )";
 
         basicShader.reset(new Shader(basicVertexShader, basicFragmentShader));
+
+        gameField.reset(new GameField());
+        gameField->bind(0);
+        basicShader->Bind();
+
+        basicShader->setUniform1i("u_Texture", 0);
+
+        basicShader->UnBind();
     }
 
     Application::~Application() {

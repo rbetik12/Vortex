@@ -11,7 +11,12 @@ namespace Vortex {
         void Bind();
         void UnBind();
 
+        void setUniform1i(const std::string& name, int value);
+
     private:
         uint32_t rendererID;
+        std::unordered_map<std::string, int> m_UniformLocationCache;
+
+        int getUniformLocation(const std::string& name);
     };
 }

@@ -10,6 +10,7 @@
 #include <imgui/ImGuiLayer.h>
 #include <renderer/Buffer.h>
 #include <renderer/VertexArray.h>
+#include <game/GameField.h>
 
 #include "renderer/Shader.h"
 
@@ -45,6 +46,7 @@ namespace Vortex {
 
         std::shared_ptr<Shader> basicShader;
         std::shared_ptr<VertexArray> squareVA;
+        std::shared_ptr<GameField> gameField;
 
         static Application* instance;
     };
