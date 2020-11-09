@@ -22,5 +22,7 @@ namespace Vortex {
         virtual inline int getWidth() const override {return width;}
 
         virtual inline int getHeight() const override { return height; }
+
+        void Update();
     };
 }

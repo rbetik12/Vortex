@@ -17,35 +17,6 @@ namespace Vortex {
         imguiLayer = new ImGuiLayer();
         PushOverlay(imguiLayer);
 
-        vertexArray.reset(VertexArray::Create());
-
-        float vertices[7 * 3] = {
-                -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f,
-                0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f,
-                0.0f, 0.5f, 0.0f, 0.5f, 0.0f, 1.0f, 1.0f
-        };
-
-        std::shared_ptr<VertexBuffer> vertexBuffer;
-        vertexBuffer.reset(VertexBuffer::Create(vertices, sizeof(vertices), RenderProperties::StaticDraw));
-
-
-        BufferLayout layout = {
-                {ShaderDataType::Float3, "position"},
-                {ShaderDataType::Float4, "color"},
-        };
-
-        vertexBuffer->SetLayout(layout);
-
-        vertexArray->AddVertexBuffer(vertexBuffer);
-
-        uint32_t indices[3] = {
-                0, 1, 2
-        };
-
-        std::shared_ptr<IndexBuffer> indexBuffer;
-        indexBuffer.reset(IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t), RenderProperties::StaticDraw));
-        vertexArray->SetIndexBuffer(indexBuffer);
-
         squareVA.reset(VertexArray::Create());
 
         float verticesSquare[4 * 4] = {
@@ -75,39 +46,6 @@ namespace Vortex {
 
         squareVA->SetIndexBuffer(squareIB);
 
-        std::string vertexSrc = R"(
-            #version 330 core
-
-            layout(location = 0) in vec3 position;
-            layout(location = 1) in vec4 color;
-
-            out vec3 vPosition;
-            out vec4 vColor;
-
-            void main(){
-                vPosition = position;
-                vColor = color;
-                gl_Position = vec4(position, 1.0);
-            }
-
-        )";
-
-        std::string fragmentSrc = R"(
-            #version 330 core
-
-            layout(location = 0) out vec4 color;
-
-            in vec3 vPosition;
-            in vec4 vColor;
-
-            void main(){
-                color = vec4(vPosition * 0.5 + 0.5, 1.0);
-                color = vColor;
-            }
-
-        )";
-
-        shader.reset(new Shader(vertexSrc, fragmentSrc));
 
         std::string basicVertexShader = R"(
             #version 330 core
@@ -144,9 +82,7 @@ namespace Vortex {
         gameField.reset(new GameField());
         gameField->bind(0);
         basicShader->Bind();
-
         basicShader->setUniform1i("u_Texture", 0);
-
         basicShader->UnBind();
     }
 
@@ -160,12 +96,9 @@ namespace Vortex {
             glClear(GL_COLOR_BUFFER_BIT);
 
             basicShader->Bind();
+            gameField->Update();
             squareVA->Bind();
             glDrawElements(GL_TRIANGLES, squareVA->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
-
-            shader->Bind();
-            vertexArray->Bind();
-            glDrawElements(GL_TRIANGLES, vertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
 
             for (Layer* layer: layerStack) {
                 layer->OnUpdate();
