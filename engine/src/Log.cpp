@@ -6,9 +6,9 @@ namespace Vortex {
 
     void Log::init() {
         spdlog::set_pattern("%^[%T] %n: %v%$");
-        coreLogger = spdlog::stdout_color_mt("VORTEX");
+        coreLogger = spdlog::stdout_logger_mt("VORTEX");
         coreLogger->set_level(spdlog::level::trace);
-        clientLogger = spdlog::stderr_color_mt("APP");
+        clientLogger = spdlog::stderr_logger_mt("APP");
         clientLogger->set_level(spdlog::level::trace);
     }
 }
