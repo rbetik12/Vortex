@@ -1,13 +1,15 @@
 #pragma once
 
 #include "renderer/textures/Texture.h"
+#include "Pixel.h"
+#include "PixelFrameBuffer.h"
 
 namespace Vortex {
     class GameField : public Texture {
     private:
-        unsigned char* frameBuffer;
+        PixelFrameBuffer frameBuffer;
         uint32_t rendererId;
-        uint32_t width, height, BPP;
+        uint32_t width, height;
     public:
         GameField();
 
